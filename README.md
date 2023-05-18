@@ -1,12 +1,11 @@
-# React Webpack Typescript (RWT)
+# Star Wars Heroes Catalog
 
-React Webpack Typescript Boilerplate with custom webpack configurations for hot reloading.
+List of star wars heroes with detailed information 
 
-A minimal secure boilerplate for writing Web Applications using [React](https://reactjs.org/), [Webpack](https://webpack.js.org/) & [TypeScript](https://www.typescriptlang.org/). <br /> This project makes use of latest packages and configurations to serve the best environment for development.
 
 <br>
 
-## Core Features
+## Features
 
 - ⚛️ React
 - 🌀 TypeScript
@@ -18,7 +17,7 @@ A minimal secure boilerplate for writing Web Applications using [React](https://
 - 🔱 Webpack & Configuration
 - 🧩 Aliases for Project Paths
 - 🔥 React Fast Refresh + Webpack HMR
-- 🌞 Dark Mode + Light Mode (Theme)
+- 🌞 Dark / Light Theme
 
 <br />
 
@@ -31,7 +30,7 @@ A minimal secure boilerplate for writing Web Applications using [React](https://
 Clone the repository :
 
 ```bash
-git clone git@github.com:walborn/boilerplate-react-webpack-typescipt.git
+git clone git@github.com:walborn/starwars.git
 ```
 
 <br />
