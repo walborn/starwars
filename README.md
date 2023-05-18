@@ -98,3 +98,16 @@ webpack/webpack.config.prod.js
 ```
 
 For further information, you can visit [Webpack Configuration](https://webpack.js.org/configuration/)
+
+
+## Commiting
+> make commit messages great again!
+If you don't have, install commitizen globally
+```
+> npm install --global commitizen
+```
+Then you can use this command to create a new commit
+```
+> git add .
+> git cz
+```
