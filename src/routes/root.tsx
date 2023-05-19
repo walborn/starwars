@@ -4,45 +4,45 @@ import {
   NavLink,
   useLoaderData,
   Form,
-  redirect,
   useNavigation,
   useSubmit,
+  LoaderFunctionArgs,
 } from 'react-router-dom'
-import { getContacts, createContact } from '../contacts'
+import { getHeroes } from '@/heroes'
 
-
-export async function loader({ request }: any) {
-  const url = new URL(request.url)
-  const q = url.searchParams.get('q')
-  const contacts = await getContacts(q)
-  return { contacts, q }
+interface Hero {
+  id: string
+  name: string
 }
 
-export async function action() {
-  const contact = await createContact()
-  return redirect(`/contacts/${contact.id}/edit`)
+interface HeroesLoaderData {
+  heroes: Hero[]
+  q: string
+}
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url)
+  const q = url.searchParams.get('q')
+  const heroes = await getHeroes(q)
+  return { heroes, q }
 }
 
 export default function Root() {
-  const { contacts, q }: any = useLoaderData()
+  const { heroes, q } = useLoaderData() as HeroesLoaderData
   const navigation = useNavigation()
   const submit = useSubmit()
 
-  const searching =
-  navigation.location &&
-  new URLSearchParams(navigation.location.search).has(
-    'q'
-  )
+  const searching = navigation.location && new URLSearchParams(navigation.location.search).has('q')
 
   React.useEffect(() => {
-    // @ts-ignore
-    document.getElementById('q').value = q
+    const input = document.getElementById('q') as HTMLInputElement
+    input.value = q
   }, [ q ])
 
   return (
     <>
       <div id="sidebar">
-        <h1>React Router Contacts</h1>
+        <h1>Star Wars Heroes</h1>
         <div>
           <Form id="search-form" role="search">
             <input
@@ -70,17 +70,14 @@ export default function Root() {
               aria-live="polite"
             ></div>
           </Form>
-          <Form method="post">
-            <button type="submit">New</button>
-          </Form>
         </div>
         <nav>
-          {contacts.length ? (
+          {heroes.length ? (
             <ul>
-              {contacts.map((contact: any) => (
-                <li key={contact.id}>
+              {heroes.map((hero: Hero) => (
+                <li key={hero.id}>
                   <NavLink
-                    to={`contacts/${contact.id}`}
+                    to={`heroes/${hero.id}`}
                     className={({ isActive, isPending }) =>
                       isActive
                         ? 'active'
@@ -89,30 +86,21 @@ export default function Root() {
                           : ''
                     }
                   >
-                    {contact.first || contact.last ? (
-                      <>
-                        {contact.first} {contact.last}
-                      </>
-                    ) : (
-                      <i>No Name</i>
-                    )}{' '}
-                    {contact.favorite && <span>★</span>}
+                    {hero.name}
                   </NavLink>
                 </li>
               ))}
             </ul>
           ) : (
             <p>
-              <i>No contacts</i>
+              <i>No match</i>
             </p>
           )}
         </nav>
       </div>
       <div
         id="detail"
-        className={
-          navigation.state === 'loading' ? 'loading' : ''
-        }
+        className={navigation.state === 'loading' ? 'loading' : ''}
       >
         <Outlet />
       </div>
