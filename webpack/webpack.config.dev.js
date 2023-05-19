@@ -1,12 +1,13 @@
 module.exports = {
   mode: 'development',
-  entry: [ './src/root.tsx' ],
+  entry: [ './src/main.tsx' ],
   module: {
     rules: require('./webpack.rules'),
   },
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
+    publicPath: '/',
   },
   plugins: require('./webpack.plugins'),
   resolve: {
@@ -16,7 +17,8 @@ module.exports = {
   stats: 'errors-warnings',
   devtool: 'cheap-module-source-map',
   devServer: {
-    open: true,
+    historyApiFallback: true,
+    // open: true,
   },
   optimization: {
     splitChunks: {

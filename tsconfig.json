@@ -29,7 +29,6 @@
   },
   "include": [
     "src/**/*",
-    "webpack/**/*",
-    "assets/icons/index.tsx",
+    "webpack/**/*"
   ]
 }
