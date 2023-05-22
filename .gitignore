@@ -10,3 +10,5 @@ dist/
 
 # Miscellaneous
 .DS_Store
+
+sandbox/

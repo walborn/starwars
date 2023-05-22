@@ -1,6 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 // import App from '@src/App'
 
 // import './variables.scss'
@@ -10,44 +17,55 @@ import './index.css'
 import {
   createBrowserRouter,
   RouterProvider,
+  redirect,
 } from 'react-router-dom'
 
-import Root, {
-  loader as rootLoader,
-} from '@/routes/root'
+import Layout from '@/routes/layout'
 
-import Hero, {
-  loader as contactLoader,
-} from './routes/hero'
+import Characters, {
+  loader as charactersLoader,
+} from '@/routes/characters'
 
-import Index from './routes/index'
+import Character, {
+  loader as characterLoader,
+} from '@/routes/character'
 
 import ErrorPage from './error-page'
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: <Layout />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
     children: [
       {
         errorElement: <ErrorPage />,
         children: [
-          { index: true, element: <Index /> },
+          { index: true, loader: () => redirect('/characters')  },
           {
-            path: 'heroes/:heroId',
-            element: <Hero />,
-            loader: contactLoader,
+            path: 'characters',
+            element: <Characters />,
+            loader: charactersLoader(queryClient),
+          },
+          {
+            path: 'characters/:characterId',
+            element: <Character />,
+            loader: characterLoader(queryClient),
           },
         ],
       },
     ],
   },
+
 ])
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+    <ReactQueryDevtools initialIsOpen />
+  </QueryClientProvider>
 )

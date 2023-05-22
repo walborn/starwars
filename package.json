@@ -1,6 +1,6 @@
 {
   "name": "starwars",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Star Wars Heroes Catalog",
   "license": "MIT",
   "scripts": {
@@ -10,6 +10,10 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@tanstack/react-query": "^4.29.7",
+    "@tanstack/react-query-devtools": "^4.29.7",
     "clsx": "^1.2.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
@@ -56,5 +60,17 @@
     "commitizen": {
       "path": "node_modules/git-cz"
     }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
