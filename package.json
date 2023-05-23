@@ -1,7 +1,7 @@
 {
   "name": "starwars",
-  "version": "0.2.0",
-  "description": "Star Wars Heroes Catalog",
+  "version": "1.0.0",
+  "description": "Star Wars Characters",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack/webpack.config.dev.js",

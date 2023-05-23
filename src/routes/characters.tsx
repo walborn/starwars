@@ -41,9 +41,12 @@ export default function Characters() {
   const navigation = useNavigation()
   const [ searchParams, setSearchParams ] = useSearchParams()
   const { status, error, data } = useQuery(charactersQuery(searchParams))
-  const count = useQuery(charactersQuery(new URLSearchParams({ search: searchParams.get('search') })))?.data?.count || data?.count
-
+  const [ count, setCount ] = React.useState(0)
   const searching = new URLSearchParams(navigation.location?.search).has('search')
+
+  React.useEffect(() => {
+    if (data?.count) setCount(data.count)
+  }, [ data ])
 
   if (status === 'error') return <pre>{JSON.stringify(error, null, 2)}</pre>
 
