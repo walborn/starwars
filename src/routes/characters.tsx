@@ -23,7 +23,7 @@ const charactersQuery = (searchParams: URLSearchParams) => {
   const url = new URL(`https://swapi.dev/api/people/?${searchParams}`)
 
   return {
-    queryKey: [ 'characters', searchParams.toString() ],
+    queryKey: [ 'characters', searchParams.get('search') || '', searchParams.get('page') || '1' ],
     queryFn: () => fetch(url),
   }
 }
@@ -31,8 +31,7 @@ const charactersQuery = (searchParams: URLSearchParams) => {
 export const loader = (queryClient: QueryClient) => async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url)
   const query = charactersQuery(url.searchParams)
-  return queryClient.getQueryData(query.queryKey)
-    ?? await queryClient.fetchQuery(query)
+  return await queryClient.ensureQueryData(query)
 }
 
 export default function Characters() {
@@ -88,7 +87,7 @@ export default function Characters() {
       <Pagination
         className={styles.pagination}
         count={Math.ceil(count / 10)}
-        page={Number(searchParams.get('page'))}
+        page={Number(searchParams.get('page')) || 1}
         onChange={handlePaginate}
       />
       {

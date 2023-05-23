@@ -2,6 +2,12 @@
 
 All notable changes to the project are listed here.
 
+### v1.0.0
+
+- Added React-router-dom
+- Added React-Query
+- Implemented Characters and Character details pages
+
 ### v0.0.0
 
 - Default `App` component and layout styles.

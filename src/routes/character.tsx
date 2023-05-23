@@ -12,7 +12,12 @@ import {
   Link,
 } from '@material-ui/core'
 
-import { LoaderFunctionArgs, useParams, NavLink } from 'react-router-dom'
+import {
+  LoaderFunctionArgs,
+  useParams,
+  NavLink,
+} from 'react-router-dom'
+
 import { useQuery, QueryClient } from '@tanstack/react-query'
 import fetch from '@/fetch'
 import { WithId } from '@/models'
@@ -20,19 +25,19 @@ import Loading from '@/components/Loading'
 
 const characterQuery = (characterId: string) => ({
   queryKey: [ 'character', characterId ],
-  queryFn: () => fetch(`https://swapi.dev/api/people/${characterId}/`),
+  queryFn: async () => {
+    const character = await fetch(`https://swapi.dev/api/people/${characterId}/`)
+    if (character.detail) throw new Response('', {
+      status: 404,
+      statusText: character.detail,
+    })
+    return character
+  },
 })
 
 export const loader = (queryClient: QueryClient) => async ({ params }: LoaderFunctionArgs) => {
   const query = characterQuery(params.characterId)
-  const data = queryClient.getQueryData(query.queryKey)
-    ?? await queryClient.fetchQuery(query)
-  if (data.detail)
-    throw new Response('', {
-      status: 404,
-      statusText: data.detail,
-    })
-  return data
+  return await queryClient.ensureQueryData(query)
 }
 
 function Character() {
@@ -106,7 +111,6 @@ function Character() {
     </div>
   )
 }
-
 
 export default Character
 

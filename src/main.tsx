@@ -8,10 +8,6 @@ import {
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-// import App from '@src/App'
-
-// import './variables.scss'
-// import './root.scss'
 import './index.css'
 
 import {
@@ -63,9 +59,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
+    <RouterProvider router={router} />
     <ReactQueryDevtools initialIsOpen />
   </QueryClientProvider>
 )
